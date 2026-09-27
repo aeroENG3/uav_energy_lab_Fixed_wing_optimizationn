@@ -1,0 +1,7 @@
+# 6 m/s from the south-west: 4.2 m/s crosswind on runway 27, log-law shear, light Dryden turbulence.
+wind:
+  mean:
+    speed_mps: 6.0
+    from_deg: 225.0
+    shear: {model: log, z0_m: 0.03}
+  turbulence: {model: dryden, intensity: auto}

@@ -1,0 +1,212 @@
+# =============================================================================
+# UAV Energy Lab - default configuration (every key documented)
+# Scenario files and sweep overrides are deep-merged on top of this file.
+# Units are SI unless the key name says otherwise (_deg, _kt, ...).
+# Status tags: [SPEC] from a published spec or standard, [DATA] from a
+#   manufacturer data file, [REP] representative value for this aircraft class
+#   (replace with your measured hardware), [TUNE] controller tuning.
+# =============================================================================
+
+sim:
+  dt_physics_s: 0.005          # JSBSim integration step (200 Hz)
+  control_rate_hz: 50          # autopilot/controller loop rate
+  log_rate_hz: 10              # time-series log rate (use 50 for control studies)
+  t_max_s: 3600                # hard stop
+  seed: 1                      # master seed: turbulence, sensor noise, wind variability
+  settle_time_s: 2.0           # time on the ground before arming (gear settles)
+
+aircraft:
+  model: rascal110_e           # JSBSim model generated from data/aircraft/rascal110_e.xml.tmpl
+  airframe_mass_kg: 4.80       # [REP] everything except battery & payload (motor, ESC, servos, avionics included)
+  payload_mass_kg: 0.0
+  cg_x_in: 36.4                # base model CG station
+  battery_x_in: 36.4
+  payload_x_in: 36.4
+  inertia_scale: 1.0           # multiplies the base model inertias
+  tailwheel_steer_deg: 30.0
+  gear_damping_lbf_per_fps: 10.0   # see MODEL_CARD M10 (base model: 100, numerically unstable at 200 Hz)
+  aero_calibration:            # calibration knobs for matching flight-test data
+    cd0_scale: 1.0
+    cdi_scale: 1.0
+    cl_scale: 1.0
+  limits:
+    stall_speed_mps: 8.5       # 1g stall at max weight (from the model's CLmax = 1.4, used for protection)
+    vne_mps: 35.0
+    max_load_factor: 3.5
+
+powertrain:
+  propeller:
+    data_file: PER3_18x8E.dat  # [DATA] APC 18x8E performance file (manufacturer-computed)
+    diameter_in: 18.0
+    inertia_kgm2: 0.0014       # [REP] prop (~0.0011) + motor rotor (~0.0003)
+    ct_scale: 1.0              # calibration: thrust coefficient multiplier
+    cp_scale: 1.0              # calibration: power coefficient multiplier
+  motor:                       # first-order DC motor model (Drela, "First-Order DC Electric Motor Model", MIT 2007)
+    kv_rpm_per_v: 295.0        # [REP] 110-size outrunner class for 6S + 18x8
+    resistance_ohm: 0.025      # [REP] winding resistance
+    no_load_current_a: 1.8     # [REP] I0 at reference voltage
+    i0_ref_voltage_v: 10.0
+    i0_voltage_exponent: 0.0   # I0 = I0_ref*(V_emf/V_ref)^exp; 0 = constant (Drela model 1)
+    max_current_a: 70.0        # [REP] ESC/motor current limit (burst)
+    mass_kg: 0.49              # informational (already inside airframe_mass_kg)
+  esc:
+    resistance_ohm: 0.003      # [REP] conduction loss resistance (on-state)
+    switching_loss_frac: 0.01  # [REP] switching loss as a fraction of V_bus*I_motor*duty
+    quiescent_power_w: 0.3     # [REP]
+    allow_regen: false         # true = synchronous/regen ESC can push current back into the battery
+    throttle_to_duty: linear   # duty = throttle (open-loop PWM ESC)
+  battery:                     # 1-RC Thevenin equivalent-circuit LiPo model
+    cells_series: 6
+    cells_parallel: 1
+    capacity_ah: 10.0          # [REP] per parallel string
+    capacity_derate: 1.0       # ageing/temperature multiplier on usable capacity
+    r0_cell_ohm: 0.0025        # [REP] ohmic resistance per cell
+    r1_cell_ohm: 0.0015        # [REP] polarisation resistance per cell
+    c1_cell_f: 20000.0         # [REP] polarisation capacitance per cell (tau = R1*C1 = 30 s)
+    wiring_resistance_ohm: 0.004
+    soc_init: 1.0
+    cell_cutoff_v: 3.30        # under-load cut-off (battery "empty")
+    mass_kg: 1.35              # [REP] 6S 10 Ah LiPo (~164 Wh/kg)
+    ocv_table:                 # [REP] typical LiPo resting voltage vs SOC (per cell). Replace with cell test data.
+      soc: [0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50,
+            0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.00]
+      v:   [3.27, 3.61, 3.69, 3.71, 3.73, 3.75, 3.77, 3.79, 3.80, 3.82, 3.84,
+            3.85, 3.87, 3.91, 3.95, 3.98, 4.02, 4.08, 4.11, 4.15, 4.20]
+  avionics:
+    base_power_w: 6.0          # [REP] flight controller + GPS + telemetry + receiver
+    servo_idle_power_w: 0.25   # [REP] per servo (4 servos)
+    servo_power_w_per_dps: 0.004  # [REP] extra power per deg/s of surface motion, per servo
+
+atmosphere:
+  model: jsbsim_us1976         # JSBSim standard atmosphere (US 1976)
+  delta_T_K: 0.0               # ISA temperature offset
+  sl_pressure_pa: 101325.0
+  relative_humidity_pct: 0.0   # JSBSim includes water vapour in density when > 0
+
+wind:
+  mean:
+    speed_mps: 0.0             # mean horizontal wind at ref_height_m AGL
+    from_deg: 270.0            # meteorological convention: direction the wind blows FROM
+    ref_height_m: 10.0
+    shear:
+      model: power             # power | log | none
+      alpha: 0.143             # power-law exponent (1/7, neutral open terrain)
+      z0_m: 0.03               # log-law roughness length (open, flat terrain)
+      min_height_m: 1.0        # profile clamp near the ground
+    veer_deg_per_100m: 0.0     # direction change with height (Ekman-type veer)
+    vertical_mps: 0.0          # steady updraft (+) / downdraft (-)
+    schedule: []               # time-varying mean wind, e.g. [{t_s: 0, speed_mps: 4, from_deg: 270}, {t_s: 600, speed_mps: 9, from_deg: 300}]
+    variability:               # slow random variation (Ornstein-Uhlenbeck) on top of the mean/schedule
+      enabled: false
+      speed_sigma_mps: 1.0
+      dir_sigma_deg: 10.0
+      tau_s: 300.0
+  turbulence:
+    model: none                # none | dryden (lab, MIL-F-8785C low-altitude) | jsbsim_milspec (JSBSim built-in)
+    w20_mps: null              # wind speed at 20 ft AGL that sets intensity; null = derive from mean wind profile
+    intensity: auto            # auto (from w20) | light | moderate | severe  (MIL-F-8785C W20 = 15/30/45 kt)
+  gusts: []                    # discrete gusts, e.g. [{t_s: 300, duration_s: 4, amplitude_mps: 4, from_deg: 180, vertical_mps: 0, shape: one_minus_cos}]
+
+mission:
+  home: {lat_deg: 24.7136, lon_deg: 46.6753, alt_msl_m: 612.0}   # example field; replace with yours
+  runway:
+    headings_deg: [270.0, 90.0]  # available take-off/landing directions
+    selection: into_wind       # into_wind | first
+    length_m: 200.0
+    width_m: 20.0
+    rolling_friction: 0.04     # paved: 0.02-0.04, short grass: 0.05-0.10
+  takeoff:
+    rotate_speed_mps: 13.0
+    tail_up_speed_mps: 6.0
+    climb_airspeed_mps: 14.0
+    climb_pitch_max_deg: 18.0
+    safe_alt_agl_m: 25.0
+    max_crosswind_mps: 6.0
+  cruise:
+    airspeed_mps: 17.0
+    alt_agl_m: 100.0
+  waypoints:                   # local north/east offsets from home (m); lat_deg/lon_deg also accepted
+    - {name: WP1, n_m: 0.0,    e_m: -700.0, alt_agl_m: 100.0}
+    - {name: WP2, n_m: 500.0,  e_m: -700.0, alt_agl_m: 100.0}
+    - {name: WP3, n_m: 500.0,  e_m: 500.0,  alt_agl_m: 100.0}
+    - {name: WP4, n_m: -300.0, e_m: 500.0,  alt_agl_m: 100.0}
+    - {name: WP5, n_m: -300.0, e_m: -300.0, alt_agl_m: 100.0}
+  acceptance_radius_m: 40.0
+  repeat: 1                    # fly the waypoint list this many times
+  landing:
+    approach_airspeed_mps: 12.5
+    glide_slope_deg: 6.0
+    final_length_m: 350.0      # straight final before the threshold
+    pattern_alt_agl_m: 45.0
+    flare_height_m: 3.0
+    flare_sink_rate_mps: 0.4
+    flare_throttle_gain: 0.35  # throttle per m/s of excess sink during the flare (0 = idle flare)
+    touchdown_point_m: 40.0    # aim point past the threshold
+    go_around_xtrack_m: 12.0   # abort landing if cross-track error exceeds this below 15 m
+    max_go_arounds: 2
+    tail_down_speed_mps: 9.0   # roll-out: hold a low attitude above this speed, then pin the tail wheel
+    gust_additive_gain: 1.0    # D9: approach speed += gain * 0.5 * gust factor (2 sigma of wind estimate)
+    gust_additive_max_mps: 2.0
+    gust_noise_floor_mps: 0.4  # wind-estimate spread in calm air due to sensor errors (subtracted in quadrature)
+  reserve:
+    rtl_soc: 0.25              # return home when SOC falls below
+    land_now_soc: 0.12         # abandon mission and land at once
+    min_cell_voltage_v: 3.45   # under-load voltage trigger for RTL
+    min_landing_soc: 0.15      # D5: RTL early if the predicted SOC at touchdown falls below this
+    d5_persist_s: 10           # ...for this many consecutive 1 s evaluations
+  geofence:
+    radius_m: 3000.0
+    max_alt_agl_m: 150.0
+
+autonomy:
+  policy:
+    name: fixed                # fixed | wind_aware_best_range | <your plug-in>
+    params: {}
+  wind_limits:
+    max_mean_mps: 13.0         # no-go above this at take-off
+  wind_estimator:
+    tau_s: 5.0                 # fast estimate (guidance, policy)
+    tau_mean_s: 60.0           # slow estimate (energy prediction D5)
+    gust_window_s: 30.0        # window for the gust-level estimate (D9)
+
+controller:
+  l1: {period_s: 18.0, damping: 0.75}
+  roll_limit_deg: 35.0
+  pitch_limit_deg: [-15.0, 20.0]
+  tecs:
+    time_const_s: 5.0
+    thr_damp: 0.5
+    integ_gain: 0.1
+    pitch_damp: 0.3
+    spd_weight: 1.0            # 0 = altitude priority, 2 = speed priority
+    max_climb_mps: 3.0
+    max_sink_mps: 3.0
+    thr_cruise: 0.60
+    vert_acc_mps2: 3.0
+  roll:  {kp: 1.1, ki: 0.15, rate_kd: 0.12}
+  pitch: {kp: 1.6, ki: 0.3, rate_kd: 0.12, trim_elev: -0.05}
+  yaw:   {k_beta: 1.5, k_r: 0.15, k_ff_ail: 0.1}
+  ground_steer: {kp: 1.2, kd: 0.3}
+  throttle: {slew_per_s: 1.0, filter_tau_s: 0.15}
+
+actuators:                     # standard digital servos; command in normalised units [-1, 1]
+  aileron:  {tau_s: 0.03, rate_limit_norm_s: 4.0, deadband_norm: 0.002}
+  elevator: {tau_s: 0.03, rate_limit_norm_s: 4.0, deadband_norm: 0.002}
+  rudder:   {tau_s: 0.03, rate_limit_norm_s: 4.0, deadband_norm: 0.002}
+  throttle: {tau_s: 0.02, rate_limit_norm_s: 5.0, deadband_norm: 0.0}
+
+sensors:                       # navigation-estimate errors (Gauss-Markov) + raw inertial noise (white)
+  noise_enabled: true
+  airspeed_sigma_mps: 0.3
+  gps_vel_sigma_mps: 0.08
+  gps_pos_sigma_m: 0.6
+  baro_alt_sigma_m: 0.25
+  attitude_sigma_deg: 0.3
+  gyro_sigma_dps: 0.5
+  accel_sigma_mps2: 0.1
+  heading_sigma_deg: 1.0
+
+logging:
+  out_dir: runs
+  format: csv                  # csv | parquet
+  save_jsbsim_files: true

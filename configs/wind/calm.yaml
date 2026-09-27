@@ -1,0 +1,4 @@
+# Calm air: reference case for energy comparisons
+wind:
+  mean: {speed_mps: 0.0}
+  turbulence: {model: none}

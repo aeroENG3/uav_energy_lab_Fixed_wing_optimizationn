@@ -1,0 +1,81 @@
+{
+  "run_id": "20260926-175651-3b5a17",
+  "status": "LANDED",
+  "termination": "landed",
+  "success": true,
+  "config_hash": "381198d701fff3c2",
+  "seed": 12,
+  "sim_time_s": 1160.525,
+  "decisions": [
+    "D1_runway",
+    "D2_go",
+    "D9_gust_approach_speed"
+  ],
+  "go_arounds": 0,
+  "rtl_reason": "mission_complete",
+  "flight_time_s": 1158.4250000021214,
+  "air_time_s": 1148.0,
+  "dist_ground_km": 16.35403856660895,
+  "dist_air_km": 18.962558239192045,
+  "E_batt_Wh": 67.26505598093146,
+  "E_chem_Wh": 68.10877629239646,
+  "Wh_per_km": 4.113054748340308,
+  "soc_start": 1.0,
+  "soc_end": 0.721636325114891,
+  "battery_capacity_Wh": 231.49499999999995,
+  "min_cell_v": 3.910909772253035,
+  "max_i_batt_A": 58.65722609009932,
+  "max_P_batt_W": 1411.9603099912213,
+  "mean_P_batt_air_W": 208.75636937599117,
+  "energy_breakdown_Wh": {
+    "battery_internal_loss": 0.8432949324716698,
+    "esc_loss": 1.2142605222390852,
+    "motor_copper_loss": 1.4251283225820235,
+    "motor_iron_friction_loss": 8.567199909674857,
+    "shaft": 53.79172842298588,
+    "thrust_useful": 40.89246905353615,
+    "propeller_loss": 12.899259369449723,
+    "avionics_servos": 2.26674314182927,
+    "drag_work": 41.710039826458626,
+    "wind_work": 0.8639355108505304
+  },
+  "eta": {
+    "propeller": 0.7601999462070137,
+    "motor": 0.8433412868945275,
+    "esc": 0.9813185839877893
+  },
+  "tracking": {
+    "xtrack_rms_m": 9.583937762167949,
+    "xtrack_rms_steady_m": 1.9239996908611663,
+    "alt_err_rms_steady_m": 1.9434279681267452,
+    "tas_err_rms_steady_mps": 0.35633575978818494,
+    "throttle_tv_per_s": 0.049476504492082705,
+    "xtrack_max_m": 76.23542313127987,
+    "alt_err_rms_m": 8.430738763183186,
+    "tas_err_rms_mps": 0.9809858812607771
+  },
+  "mission_E_Wh": 58.58412153887299,
+  "mission_Wh_per_km": 3.9225326054463743,
+  "touchdown": {
+    "sink_mps": 0.47,
+    "tas_mps": 10.06,
+    "along_runway_m": 38.0,
+    "xtrack_m": 0.78
+  },
+  "stop": {
+    "reason": "stopped",
+    "along_m": 65.9,
+    "xtrack_m": -0.24
+  },
+  "wind": {
+    "mean_speed_mps": 8.291727181774398,
+    "max_speed_mps": 10.872326659208065,
+    "turb_rms_mps": 1.313437755827041
+  },
+  "energy_closure": {
+    "residual_J": -5.848053608854116,
+    "relative": -1.9455293264931825e-05
+  },
+  "wall_time_s": 209.07,
+  "realtime_factor": 5.6
+}

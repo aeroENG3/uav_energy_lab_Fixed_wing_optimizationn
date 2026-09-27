@@ -1,0 +1,6 @@
+# 7 m/s wind with JSBSim's own MIL-spec Dryden turbulence (includes rotational gust terms).
+# Intensity from the mean-wind profile (W20 = wind at 20 ft), i.e. physically consistent
+# with the mean wind. Cross-check of the lab's Dryden generator against JSBSim's.
+wind:
+  mean: {speed_mps: 7.0, from_deg: 250.0}
+  turbulence: {model: jsbsim_milspec, intensity: auto}

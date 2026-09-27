@@ -1,0 +1,248 @@
+{
+  "scenario": [
+    "configs/missions/out_and_back.yaml",
+    "configs/wind/steady_headwind_6.yaml"
+  ],
+  "seed": 1,
+  "baseline": {
+    "autonomy.policy.name": "fixed",
+    "mission.cruise.airspeed_mps": 17.0
+  },
+  "optimised": {
+    "autonomy.policy.name": "linear_wind",
+    "autonomy.policy.params.v0": 15.504993605999445,
+    "autonomy.policy.params.k_head": 0.6392185942841597
+  },
+  "optimisation": {
+    "spec": {
+      "name": "optimisation",
+      "scenario": [
+        "configs/missions/out_and_back.yaml",
+        "configs/wind/steady_headwind_6.yaml"
+      ],
+      "fixed": {
+        "autonomy.policy.name": "linear_wind",
+        "sim.log_rate_hz": 2
+      },
+      "variables": [
+        {
+          "path": "autonomy.policy.params.v0",
+          "lo": 12.0,
+          "hi": 20.0
+        },
+        {
+          "path": "autonomy.policy.params.k_head",
+          "lo": 0.0,
+          "hi": 1.2
+        }
+      ],
+      "objective": {
+        "kpi": "mission_E_Wh",
+        "sense": "min"
+      },
+      "constraints": [
+        {
+          "kpi": "status",
+          "op": "==",
+          "value": "LANDED"
+        },
+        {
+          "kpi": "rtl_reason",
+          "op": "==",
+          "value": "mission_complete"
+        }
+      ],
+      "conditions": [
+        {
+          "label": "headwind6",
+          "overrides": {}
+        }
+      ],
+      "seeds": [
+        1
+      ],
+      "algorithm": {
+        "population": 8,
+        "elite_frac": 0.25,
+        "iterations": 5,
+        "init_sigma_frac": 0.3,
+        "min_sigma_frac": 0.02,
+        "smoothing": 0.7,
+        "seed": 0
+      },
+      "workers": 4
+    },
+    "result": {
+      "name": "optimisation",
+      "objective": {
+        "kpi": "mission_E_Wh",
+        "sense": "min"
+      },
+      "sense": "min",
+      "best_objective": 58.80858542845644,
+      "best_variables": {
+        "autonomy.policy.params.v0": 15.504993605999445,
+        "autonomy.policy.params.k_head": 0.6392185942841597
+      },
+      "final_mean": {
+        "autonomy.policy.params.v0": 15.519627644336568,
+        "autonomy.policy.params.k_head": 0.6678285656248761
+      },
+      "generations": 5,
+      "cancelled": false,
+      "best_run_status": "LANDED"
+    },
+    "flights": 41
+  },
+  "summary": {
+    "baseline": {
+      "design": "baseline",
+      "status": "LANDED",
+      "mission_E_Wh": 64.49317067257064,
+      "mission_Wh_per_km": 4.294748908165222,
+      "E_batt_Wh": 72.94184574559102,
+      "Wh_per_km": 4.431230224027494,
+      "flight_time_s": 1330.0850000058683,
+      "soc_end": 0.6980502025112008,
+      "eta_propeller": 0.7653342472607687,
+      "wind_work_Wh": 0.028861379069460336,
+      "drag_work_Wh": 44.17561221108452,
+      "touchdown_sink_mps": 0.64,
+      "closure_relative": -2.9942632431357703e-07
+    },
+    "optimised": {
+      "design": "optimised",
+      "status": "LANDED",
+      "mission_E_Wh": 58.815616732234794,
+      "mission_Wh_per_km": 3.962940490255194,
+      "E_batt_Wh": 67.1761901634471,
+      "Wh_per_km": 4.136838774249191,
+      "flight_time_s": 1163.905000002241,
+      "soc_end": 0.7221675579871453,
+      "eta_propeller": 0.7641120111480529,
+      "wind_work_Wh": 0.030610028871782376,
+      "drag_work_Wh": 41.02360624844675,
+      "touchdown_sink_mps": 0.4,
+      "closure_relative": -1.7131871874470693e-07
+    },
+    "mission_saving_pct": 8.803341316804802,
+    "total_saving_pct": 7.904455286549183
+  },
+  "physics": {
+    "wind_at_cruise_mps": 8.33971578728012,
+    "fit": {
+      "a": 0.020294584076565494,
+      "b": 177.79307385567887,
+      "c": 88.53536678025206
+    },
+    "pred_upwind_mps": 19.310000000000432,
+    "pred_downwind_mps": 12.0,
+    "law_upwind_mps": 20.835895008274058,
+    "law_downwind_mps": 12.0,
+    "map_diagnostic": {
+      "sim": {
+        "up": 20.40999999999982,
+        "down": 12.0
+      },
+      "model": {
+        "up": 20.529999999999816,
+        "down": 12.0
+      },
+      "speeds": [
+        10.9999,
+        12.9996,
+        14.9995,
+        16.9996,
+        18.9984,
+        20.9988,
+        22.9988,
+        24.8672
+      ],
+      "P_sim_W": [
+        129.724,
+        147.741,
+        171.594,
+        201.187,
+        236.758,
+        278.821,
+        342.083,
+        411.056
+      ],
+      "P_model_W": [
+        129.634,
+        147.152,
+        170.322,
+        198.939,
+        233.346,
+        273.675,
+        335.047,
+        402.272
+      ],
+      "fit_minus_sim_W": [
+        1.9858751513690436,
+        -0.9457364969991318,
+        -2.717994455885133,
+        -2.4927174524100337,
+        0.3010737392670251,
+        6.097112741329056,
+        1.0684612286069637,
+        -3.2946104142067156
+      ]
+    }
+  },
+  "reference_policy": {
+    "policy": "wind_aware_best_range",
+    "baseline_mission_E_Wh": 64.49,
+    "mission_E_Wh": 60.33,
+    "source": "validation_report/vv_results.json, check D1"
+  },
+  "robustness": [
+    {
+      "seed": 11,
+      "baseline_status": "LANDED",
+      "optimised_status": "LANDED",
+      "baseline_return": "mission_complete",
+      "optimised_return": "mission_complete",
+      "baseline_mission_E_Wh": 66.770119344766,
+      "optimised_mission_E_Wh": 60.3647890309944,
+      "saving_pct": 9.593108978430642
+    },
+    {
+      "seed": 12,
+      "baseline_status": "LANDED",
+      "optimised_status": "LANDED",
+      "baseline_return": "mission_complete",
+      "optimised_return": "mission_complete",
+      "baseline_mission_E_Wh": 64.7352912531246,
+      "optimised_mission_E_Wh": 58.58412153887299,
+      "saving_pct": 9.502034508811619
+    },
+    {
+      "seed": 13,
+      "baseline_status": "LANDED",
+      "optimised_status": "LANDED",
+      "baseline_return": "mission_complete",
+      "optimised_return": "mission_complete",
+      "baseline_mission_E_Wh": 65.17723580576109,
+      "optimised_mission_E_Wh": 59.047969931607064,
+      "saving_pct": 9.403997881131755
+    }
+  ],
+  "criteria_text": {
+    "C1": "Both flights complete the mission and land on the runway (status LANDED, return reason mission_complete)",
+    "C2": "Mechanical energy balance closes in both flights: |residual| < 0.1 % of gross work",
+    "C3": "The optimised speed law needs at least 2 % less mission-leg battery energy than the baseline",
+    "C4": "Optimised up-wind and down-wind airspeeds agree with the independent speed-to-fly prediction within 1.5 m/s",
+    "C5": "The saving holds in each of 3 unseen light-turbulence seeds (paired comparison, complete missions)",
+    "C6": "No safety regression: touchdown sink < 2.5 m/s and no energy-reserve decision (D4/D5) in the optimised flight"
+  },
+  "criteria": {
+    "C1": true,
+    "C2": true,
+    "C3": true,
+    "C4": false,
+    "C5": true,
+    "C6": true
+  },
+  "wall_time_s": 3151.165625333786
+}

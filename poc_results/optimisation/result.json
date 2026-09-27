@@ -1,0 +1,20 @@
+{
+  "name": "optimisation",
+  "objective": {
+    "kpi": "mission_E_Wh",
+    "sense": "min"
+  },
+  "sense": "min",
+  "best_objective": 58.80858542845644,
+  "best_variables": {
+    "autonomy.policy.params.v0": 15.504993605999445,
+    "autonomy.policy.params.k_head": 0.6392185942841597
+  },
+  "final_mean": {
+    "autonomy.policy.params.v0": 15.519627644336568,
+    "autonomy.policy.params.k_head": 0.6678285656248761
+  },
+  "generations": 5,
+  "cancelled": false,
+  "best_run_status": "LANDED"
+}

@@ -1,0 +1,5 @@
+# Repeats the survey box until the energy reserve logic brings the aircraft home
+# (exercises decisions D4/D5 and the full battery discharge curve).
+include: [survey_box.yaml]
+mission:
+  repeat: 30

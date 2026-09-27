@@ -1,0 +1,11 @@
+# Wind that strengthens and veers during the flight, with slow random variability (OU process).
+wind:
+  mean:
+    speed_mps: 3.0
+    from_deg: 270.0
+    schedule:
+      - {t_s: 0,   speed_mps: 3.0, from_deg: 270.0}
+      - {t_s: 200, speed_mps: 6.0, from_deg: 290.0}
+      - {t_s: 400, speed_mps: 9.0, from_deg: 310.0}
+    variability: {enabled: true, speed_sigma_mps: 1.0, dir_sigma_deg: 8.0, tau_s: 120.0}
+  turbulence: {model: dryden, intensity: auto}

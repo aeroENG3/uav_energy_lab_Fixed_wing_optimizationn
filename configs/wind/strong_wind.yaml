@@ -1,0 +1,5 @@
+# Stress case: 11 m/s mean wind at 10 m (about 15 m/s at 100 m, close to the 17 m/s cruise speed)
+# with consistent Dryden turbulence. Expect heavy energy use and the energy/wind decisions to act.
+wind:
+  mean: {speed_mps: 11.0, from_deg: 280.0}
+  turbulence: {model: dryden, intensity: auto}

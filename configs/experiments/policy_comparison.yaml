@@ -1,0 +1,11 @@
+# Fixed cruise speed vs the wind-aware speed-to-fly policy across wind conditions.
+name: policy_comparison
+scenario: [configs/missions/out_and_back.yaml]
+fixed:
+  sim.log_rate_hz: 5
+  wind.turbulence.model: dryden
+grid:
+  autonomy.policy.name: [fixed, wind_aware_best_range]
+  wind.mean.speed_mps: [0.0, 4.0, 8.0]
+  wind.mean.from_deg: [270.0, 0.0]
+replicates: 1

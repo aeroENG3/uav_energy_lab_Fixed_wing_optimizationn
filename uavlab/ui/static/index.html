@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UAV Energy Lab</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%232c5d8a'/%3E%3Cpath d='M4 17h24M16 8v17M11 25h10' stroke='white' stroke-width='2.4' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/vendor/uPlot.min.css">
+<link rel="stylesheet" href="/static/app.css">
+<script src="/static/vendor/uPlot.iife.min.js"></script>
+</head>
+<body>
+<div id="app" class="app">
+  <header class="topbar">
+    <div class="brand" title="UAV Energy Lab">
+      <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><rect width="32" height="32" rx="4" fill="var(--accent)"/><path d="M4 17h24M16 8v17M11 25h10" stroke="#fff" stroke-width="2.4" fill="none"/></svg>
+      <span>UAV Energy Lab</span>
+    </div>
+    <div class="scenario-id" id="scenario-id" title="Current scenario"></div>
+    <div class="toolbar" id="toolbar">
+      <button class="btn" id="tb-open" title="Load a mission, wind or saved scenario preset">Open preset</button>
+      <button class="btn" id="tb-save" title="Save the current scenario to the workspace">Save scenario</button>
+      <button class="btn" id="tb-validate" title="Check every parameter against its limits">Validate</button>
+      <button class="btn btn-primary" id="tb-run" title="Run a full flight with the current scenario (Ctrl+Enter)">
+        <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M4 2l10 6-10 6z" fill="currentColor"/></svg> Run simulation</button>
+    </div>
+    <div class="top-right">
+      <button class="btn btn-ghost" id="tb-theme" title="Switch light / dark display">Display</button>
+    </div>
+  </header>
+  <nav class="sidenav" id="sidenav" aria-label="Main"></nav>
+  <main class="main" id="main" tabindex="-1"></main>
+  <footer class="statusbar" id="statusbar"></footer>
+</div>
+<div id="toasts" class="toasts" aria-live="polite"></div>
+<div id="modal-root"></div>
+<script type="module" src="/static/js/app.js"></script>
+</body>
+</html>

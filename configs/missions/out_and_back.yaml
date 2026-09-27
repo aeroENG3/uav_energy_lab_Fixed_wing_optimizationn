@@ -1,0 +1,10 @@
+# Out-and-back 2.5 km legs east-west: isolates head-wind vs tail-wind energy cost per leg.
+mission:
+  cruise: {airspeed_mps: 17.0, alt_agl_m: 100.0}
+  waypoints:
+    - {name: W_END, n_m: 150.0,  e_m: -2500.0, alt_agl_m: 100.0}
+    - {name: E_END, n_m: 150.0,  e_m: 2500.0,  alt_agl_m: 100.0}
+    - {name: W_END2, n_m: -150.0, e_m: -2500.0, alt_agl_m: 100.0}
+    - {name: E_END2, n_m: -150.0, e_m: 1200.0,  alt_agl_m: 100.0}
+  repeat: 1
+  geofence: {radius_m: 4000.0, max_alt_agl_m: 150.0}

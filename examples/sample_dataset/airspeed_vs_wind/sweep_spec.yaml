@@ -1,0 +1,19 @@
+name: airspeed_vs_wind
+scenario:
+- configs/missions/out_and_back.yaml
+fixed:
+  sim.log_rate_hz: 5
+  wind.mean.from_deg: 270.0
+  wind.turbulence.model: none
+grid:
+  mission.cruise.airspeed_mps:
+  - 13.0
+  - 15.0
+  - 17.0
+  - 19.0
+  - 21.0
+  wind.mean.speed_mps:
+  - 0.0
+  - 4.0
+  - 8.0
+replicates: 1

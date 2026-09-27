@@ -1,0 +1,6 @@
+# Extreme case (beyond the aircraft's envelope): 7 m/s mean wind but turbulence of
+# MIL-F-8785C "moderate" (W20 = 30 kt, i.e. the gustiness of a ~15 m/s wind).
+# Gusts reach the cruise airspeed; use it to test robustness and abort logic, not energy.
+wind:
+  mean: {speed_mps: 7.0, from_deg: 250.0}
+  turbulence: {model: jsbsim_milspec, intensity: moderate}

@@ -1,0 +1,10 @@
+# Default 5-waypoint box (~3.9 km per lap) at 100 m AGL, 17 m/s.
+mission:
+  cruise: {airspeed_mps: 17.0, alt_agl_m: 100.0}
+  waypoints:
+    - {name: WP1, n_m: 0.0,    e_m: -700.0, alt_agl_m: 100.0}
+    - {name: WP2, n_m: 500.0,  e_m: -700.0, alt_agl_m: 100.0}
+    - {name: WP3, n_m: 500.0,  e_m: 500.0,  alt_agl_m: 100.0}
+    - {name: WP4, n_m: -300.0, e_m: 500.0,  alt_agl_m: 100.0}
+    - {name: WP5, n_m: -300.0, e_m: -300.0, alt_agl_m: 100.0}
+  repeat: 1

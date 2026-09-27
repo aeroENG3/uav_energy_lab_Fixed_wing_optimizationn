@@ -1,0 +1,8 @@
+# 5 m/s westerly plus discrete 1-cosine gusts (horizontal and vertical) during the mission.
+wind:
+  mean: {speed_mps: 5.0, from_deg: 270.0}
+  turbulence: {model: dryden, intensity: auto}
+  gusts:
+    - {t_s: 60,  duration_s: 4.0, amplitude_mps: 5.0, from_deg: 180.0, shape: one_minus_cos}
+    - {t_s: 120, duration_s: 3.0, amplitude_mps: 0.0, vertical_mps: 3.0, shape: one_minus_cos}
+    - {t_s: 180, duration_s: 6.0, amplitude_mps: 4.0, from_deg: 270.0, shape: ramp_hold, hold_s: 20.0}

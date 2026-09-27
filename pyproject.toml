@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "uavlab"
+version = "0.1.0"
+description = "JSBSim-based UAV energy lab: Rascal 110 electric, atmosphere/wind, mission, autonomy, control, electric powertrain, logs for wind-adaptive optimisation"
+requires-python = ">=3.10"
+dependencies = ["jsbsim>=1.2.1", "numpy>=2.0", "scipy>=1.10", "pandas>=2.0", "pyyaml>=6.0", "matplotlib>=3.7",
+                "fastapi>=0.100", "uvicorn>=0.23"]
+
+[project.optional-dependencies]
+rl = ["gymnasium>=0.29"]
+parquet = ["pyarrow>=12"]
+test = ["pytest>=7", "gymnasium>=0.29", "httpx>=0.24"]
+
+[project.scripts]
+uavlab = "uavlab.cli:main"
+
+[tool.setuptools]
+packages = ["uavlab", "uavlab.energy", "uavlab.validation", "uavlab.ui"]
+
+[tool.setuptools.package-data]
+uavlab = ["data/*.dat", "data/aircraft/*", "ui/static/*", "ui/static/js/*.js", "ui/static/js/pages/*.js",
+          "ui/static/vendor/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

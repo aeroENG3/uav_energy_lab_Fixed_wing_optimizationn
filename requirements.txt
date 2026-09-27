@@ -1,0 +1,12 @@
+jsbsim>=1.2.1
+numpy>=2.0
+scipy>=1.10
+pandas>=2.0
+pyyaml>=6.0
+matplotlib>=3.7
+fastapi>=0.100       # graphical interface (python -m uavlab ui)
+uvicorn>=0.23        # graphical interface web server
+gymnasium>=0.29      # RL environment (optional)
+pyarrow>=12          # parquet logs (optional)
+pytest>=7            # tests (optional)
+httpx>=0.24          # interface API tests (optional)

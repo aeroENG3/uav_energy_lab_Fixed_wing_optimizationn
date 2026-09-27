@@ -1,0 +1,13 @@
+{
+  "name": "uavlab-handbook-build",
+  "private": true,
+  "description": "Builds docs/handbook/handbook.html from docs/handbook/src/*.md (Markdown + KaTeX MathML + inline SVG figures).",
+  "type": "module",
+  "scripts": {
+    "build": "python make_figures.py && node build.mjs"
+  },
+  "dependencies": {
+    "katex": "0.16.22",
+    "marked": "15.0.12"
+  }
+}

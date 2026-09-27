@@ -1,0 +1,11 @@
+# Energy of the survey mission versus mean wind speed and direction (full flights).
+name: wind_speed_direction
+scenario: [configs/missions/survey_box.yaml]
+fixed:
+  sim.log_rate_hz: 5
+  wind.turbulence.model: dryden
+  wind.turbulence.intensity: auto
+grid:
+  wind.mean.speed_mps: [0.0, 3.0, 6.0, 9.0]
+  wind.mean.from_deg: [0.0, 90.0, 180.0, 270.0]
+replicates: 1

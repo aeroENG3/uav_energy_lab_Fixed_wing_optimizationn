@@ -1,0 +1,38 @@
+name: optimisation
+scenario:
+- configs/missions/out_and_back.yaml
+- configs/wind/steady_headwind_6.yaml
+fixed:
+  autonomy.policy.name: linear_wind
+  sim.log_rate_hz: 2
+variables:
+- path: autonomy.policy.params.v0
+  lo: 12.0
+  hi: 20.0
+- path: autonomy.policy.params.k_head
+  lo: 0.0
+  hi: 1.2
+objective:
+  kpi: mission_E_Wh
+  sense: min
+constraints:
+- kpi: status
+  op: ==
+  value: LANDED
+- kpi: rtl_reason
+  op: ==
+  value: mission_complete
+conditions:
+- label: headwind6
+  overrides: {}
+seeds:
+- 1
+algorithm:
+  population: 8
+  elite_frac: 0.25
+  iterations: 5
+  init_sigma_frac: 0.3
+  min_sigma_frac: 0.02
+  smoothing: 0.7
+  seed: 0
+workers: 4

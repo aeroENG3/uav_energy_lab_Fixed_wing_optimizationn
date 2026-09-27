@@ -1,0 +1,4 @@
+# 7 m/s westerly with MIL-F-8785C "light" Dryden turbulence (W20 = 15 kt).
+wind:
+  mean: {speed_mps: 7.0, from_deg: 250.0}
+  turbulence: {model: dryden, intensity: light}

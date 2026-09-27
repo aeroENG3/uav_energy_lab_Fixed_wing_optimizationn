@@ -1,0 +1,279 @@
+sim:
+  dt_physics_s: 0.005
+  control_rate_hz: 50
+  log_rate_hz: 10
+  t_max_s: 3600
+  seed: 1
+  settle_time_s: 2.0
+aircraft:
+  model: rascal110_e
+  airframe_mass_kg: 4.8
+  payload_mass_kg: 0.0
+  cg_x_in: 36.4
+  battery_x_in: 36.4
+  payload_x_in: 36.4
+  inertia_scale: 1.0
+  tailwheel_steer_deg: 30.0
+  gear_damping_lbf_per_fps: 10.0
+  aero_calibration:
+    cd0_scale: 1.0
+    cdi_scale: 1.0
+    cl_scale: 1.0
+  limits:
+    stall_speed_mps: 8.5
+    vne_mps: 35.0
+    max_load_factor: 3.5
+powertrain:
+  propeller:
+    data_file: PER3_18x8E.dat
+    diameter_in: 18.0
+    inertia_kgm2: 0.0014
+    ct_scale: 1.0
+    cp_scale: 1.0
+  motor:
+    kv_rpm_per_v: 295.0
+    resistance_ohm: 0.025
+    no_load_current_a: 1.8
+    i0_ref_voltage_v: 10.0
+    i0_voltage_exponent: 0.0
+    max_current_a: 70.0
+    mass_kg: 0.49
+  esc:
+    resistance_ohm: 0.003
+    switching_loss_frac: 0.01
+    quiescent_power_w: 0.3
+    allow_regen: false
+    throttle_to_duty: linear
+  battery:
+    cells_series: 6
+    cells_parallel: 1
+    capacity_ah: 10.0
+    capacity_derate: 1.0
+    r0_cell_ohm: 0.0025
+    r1_cell_ohm: 0.0015
+    c1_cell_f: 20000.0
+    wiring_resistance_ohm: 0.004
+    soc_init: 1.0
+    cell_cutoff_v: 3.3
+    mass_kg: 1.35
+    ocv_table:
+      soc:
+      - 0.0
+      - 0.05
+      - 0.1
+      - 0.15
+      - 0.2
+      - 0.25
+      - 0.3
+      - 0.35
+      - 0.4
+      - 0.45
+      - 0.5
+      - 0.55
+      - 0.6
+      - 0.65
+      - 0.7
+      - 0.75
+      - 0.8
+      - 0.85
+      - 0.9
+      - 0.95
+      - 1.0
+      v:
+      - 3.27
+      - 3.61
+      - 3.69
+      - 3.71
+      - 3.73
+      - 3.75
+      - 3.77
+      - 3.79
+      - 3.8
+      - 3.82
+      - 3.84
+      - 3.85
+      - 3.87
+      - 3.91
+      - 3.95
+      - 3.98
+      - 4.02
+      - 4.08
+      - 4.11
+      - 4.15
+      - 4.2
+  avionics:
+    base_power_w: 6.0
+    servo_idle_power_w: 0.25
+    servo_power_w_per_dps: 0.004
+atmosphere:
+  model: jsbsim_us1976
+  delta_T_K: 0.0
+  sl_pressure_pa: 101325.0
+  relative_humidity_pct: 0.0
+wind:
+  mean:
+    speed_mps: 6.0
+    from_deg: 270.0
+    ref_height_m: 10.0
+    shear:
+      model: power
+      alpha: 0.143
+      z0_m: 0.03
+      min_height_m: 1.0
+    veer_deg_per_100m: 0.0
+    vertical_mps: 0.0
+    schedule: []
+    variability:
+      enabled: false
+      speed_sigma_mps: 1.0
+      dir_sigma_deg: 10.0
+      tau_s: 300.0
+  turbulence:
+    model: none
+    w20_mps: null
+    intensity: auto
+  gusts: []
+mission:
+  home:
+    lat_deg: 24.7136
+    lon_deg: 46.6753
+    alt_msl_m: 612.0
+  runway:
+    headings_deg:
+    - 270.0
+    - 90.0
+    selection: into_wind
+    length_m: 200.0
+    width_m: 20.0
+    rolling_friction: 0.04
+  takeoff:
+    rotate_speed_mps: 13.0
+    tail_up_speed_mps: 6.0
+    climb_airspeed_mps: 14.0
+    climb_pitch_max_deg: 18.0
+    safe_alt_agl_m: 25.0
+    max_crosswind_mps: 6.0
+  cruise:
+    airspeed_mps: 17.0
+    alt_agl_m: 100.0
+  waypoints:
+  - name: W_END
+    n_m: 150.0
+    e_m: -2500.0
+    alt_agl_m: 100.0
+  - name: E_END
+    n_m: 150.0
+    e_m: 2500.0
+    alt_agl_m: 100.0
+  - name: W_END2
+    n_m: -150.0
+    e_m: -2500.0
+    alt_agl_m: 100.0
+  - name: E_END2
+    n_m: -150.0
+    e_m: 1200.0
+    alt_agl_m: 100.0
+  acceptance_radius_m: 40.0
+  repeat: 1
+  landing:
+    approach_airspeed_mps: 12.5
+    glide_slope_deg: 6.0
+    final_length_m: 350.0
+    pattern_alt_agl_m: 45.0
+    flare_height_m: 3.0
+    flare_sink_rate_mps: 0.4
+    flare_throttle_gain: 0.35
+    touchdown_point_m: 40.0
+    go_around_xtrack_m: 12.0
+    max_go_arounds: 2
+    tail_down_speed_mps: 9.0
+    gust_additive_gain: 1.0
+    gust_additive_max_mps: 2.0
+    gust_noise_floor_mps: 0.4
+  reserve:
+    rtl_soc: 0.25
+    land_now_soc: 0.12
+    min_cell_voltage_v: 3.45
+    min_landing_soc: 0.15
+    d5_persist_s: 10
+  geofence:
+    radius_m: 4000.0
+    max_alt_agl_m: 150.0
+autonomy:
+  policy:
+    name: fixed
+    params: {}
+  wind_limits:
+    max_mean_mps: 13.0
+  wind_estimator:
+    tau_s: 5.0
+    tau_mean_s: 60.0
+    gust_window_s: 30.0
+controller:
+  l1:
+    period_s: 18.0
+    damping: 0.75
+  roll_limit_deg: 35.0
+  pitch_limit_deg:
+  - -15.0
+  - 20.0
+  tecs:
+    time_const_s: 5.0
+    thr_damp: 0.5
+    integ_gain: 0.1
+    pitch_damp: 0.3
+    spd_weight: 1.0
+    max_climb_mps: 3.0
+    max_sink_mps: 3.0
+    thr_cruise: 0.6
+    vert_acc_mps2: 3.0
+  roll:
+    kp: 1.1
+    ki: 0.15
+    rate_kd: 0.12
+  pitch:
+    kp: 1.6
+    ki: 0.3
+    rate_kd: 0.12
+    trim_elev: -0.05
+  yaw:
+    k_beta: 1.5
+    k_r: 0.15
+    k_ff_ail: 0.1
+  ground_steer:
+    kp: 1.2
+    kd: 0.3
+  throttle:
+    slew_per_s: 1.0
+    filter_tau_s: 0.15
+actuators:
+  aileron:
+    tau_s: 0.03
+    rate_limit_norm_s: 4.0
+    deadband_norm: 0.002
+  elevator:
+    tau_s: 0.03
+    rate_limit_norm_s: 4.0
+    deadband_norm: 0.002
+  rudder:
+    tau_s: 0.03
+    rate_limit_norm_s: 4.0
+    deadband_norm: 0.002
+  throttle:
+    tau_s: 0.02
+    rate_limit_norm_s: 5.0
+    deadband_norm: 0.0
+sensors:
+  noise_enabled: true
+  airspeed_sigma_mps: 0.3
+  gps_vel_sigma_mps: 0.08
+  gps_pos_sigma_m: 0.6
+  baro_alt_sigma_m: 0.25
+  attitude_sigma_deg: 0.3
+  gyro_sigma_dps: 0.5
+  accel_sigma_mps2: 0.1
+  heading_sigma_deg: 1.0
+logging:
+  out_dir: runs
+  format: csv
+  save_jsbsim_files: true

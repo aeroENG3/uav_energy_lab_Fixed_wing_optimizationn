@@ -1,0 +1,16 @@
+# Monte-Carlo over wind, turbulence and cruise settings (Latin-hypercube sampling).
+# Use dataset_runs.csv for surrogate models / Bayesian optimisation and
+# dataset_legs.csv for per-leg wind-energy regression.
+name: monte_carlo_wind
+scenario: [configs/missions/survey_box.yaml]
+fixed: {sim.log_rate_hz: 5}
+random:
+  n: 40
+  params:
+    wind.mean.speed_mps: {uniform: [0.0, 10.0]}
+    wind.mean.from_deg: {uniform: [0.0, 360.0]}
+    wind.turbulence.model: {choice: [none, dryden]}
+    mission.cruise.airspeed_mps: {uniform: [13.0, 22.0]}
+    mission.cruise.alt_agl_m: {uniform: [60.0, 140.0]}
+replicates: 1
+seed: 2026

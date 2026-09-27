@@ -1,0 +1,39 @@
+{
+  "run_id": "20260926-171114-77827f",
+  "created_utc": "2026-09-27T00:20:08+00:00",
+  "uavlab_version": "0.1.0",
+  "jsbsim_version": "1.3.1",
+  "python": "3.14.0",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "pandas": "3.0.6",
+  "platform": "Windows-11-10.0.22621-SP0",
+  "config_hash": "5321f1196a196de5",
+  "seed": 1,
+  "model": {
+    "root": "C:\\Users\\Brand\\Documents\\uav_energy_lab\\poc_results\\baseline\\jsbsim",
+    "model": "rascal110_e",
+    "files": {
+      "aircraft": "C:\\Users\\Brand\\Documents\\uav_energy_lab\\poc_results\\baseline\\jsbsim\\aircraft\\rascal110_e\\rascal110_e.xml",
+      "engine": "C:\\Users\\Brand\\Documents\\uav_energy_lab\\poc_results\\baseline\\jsbsim\\engine\\lab_motor_torque_source.xml",
+      "propeller": "C:\\Users\\Brand\\Documents\\uav_energy_lab\\poc_results\\baseline\\jsbsim\\engine\\lab_propeller.xml"
+    },
+    "sha256": {
+      "aircraft": "9325ddd938c2daf38203fbd826dfbfef293ff26ee77417b22660fd31078e309a",
+      "engine": "58e79ac1593e9b9040cd46affec3c8b2c530256d038b9583a533bc1a57cc573e",
+      "propeller": "25833438b929857d998c45815ef47a89d18ee3c14609aef8067a561fe9b543db"
+    },
+    "propeller": {
+      "j_data_max": 0.6389333333333332,
+      "krpm_min": 1.0,
+      "krpm_max": 12.0,
+      "source": "PER3_18x8E.dat"
+    }
+  },
+  "wall_time_s": 534.13,
+  "sim_time_s": 1332.185,
+  "dt_physics_s": 0.005,
+  "control_rate_hz": 50,
+  "log_rate_hz": 10,
+  "base_model_provenance": "ArduPilot Tools/autotest/aircraft/Rascal (commit 66c8985), from FlightGear Rascal110-JSBSim; see docs/MODEL_CARD.md"
+}

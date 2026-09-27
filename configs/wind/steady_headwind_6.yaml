@@ -1,0 +1,7 @@
+# Steady 6 m/s westerly (at 10 m AGL) with a 1/7 power-law shear profile, no turbulence.
+wind:
+  mean:
+    speed_mps: 6.0
+    from_deg: 270.0
+    shear: {model: power, alpha: 0.143}
+  turbulence: {model: none}
